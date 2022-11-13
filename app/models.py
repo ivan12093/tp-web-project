@@ -19,10 +19,10 @@ QUESTIONS = {
             'text': f'Question text #{i}',
             'author': f'Author #{i}',
             'answers_number': i,
-            'tags': [f'tag{k}' for k in range(i)],
+            'tags': [{'name': f'tag{k}'} for k in range(i)],
             'likes': i,
             'answers': [answer for answer in ANSWERS if answer['question_id'] == i]
         }
-        for i in range(1, 10)
+        for i in range(1, 30)
     ],
 }

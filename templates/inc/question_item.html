@@ -1,0 +1,37 @@
+{% load static %}
+<div class="question">
+ <div class="row">
+    <div class="col-2">
+       <div class="avatar">
+          <img src="{% static 'img/avatar-1.jpg' %}" alt="" />
+       </div>
+       <div class="text text-center margin-top">
+          {{ question.author }}
+       </div>
+       <div class="rating vote-group">
+           <div class="text text-center">{{ question.likes }}</div>
+           <div class="text text-center">
+               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                   <button type="button" class="btn btn-outline-success btn-sm">+</button>
+                   <button type="button" class="btn btn-outline-danger btn-sm">-</button>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="col-10">
+       <a href="{% url 'question' question_id=question.id %}", class="text-decoration-none">
+          <h2 class="question-title">{{ question.title }}</h2>
+       </a>
+       <div class="question-text">
+          {{ question.title }}
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+       <a href="/question/1">answers({{ question.answers_number }})</a>
+        {% include 'inc/enum_tags.html' %}
+    </div>
+ </div>
+</div>

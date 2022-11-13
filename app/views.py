@@ -3,12 +3,29 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
 from app.models import QUESTIONS
+from app.utils import paginate
 
 
 @require_GET
 def index(request: HttpRequest) -> HttpResponse:
-    context = QUESTIONS
+    questions = QUESTIONS['questions']
+    context = {'page_obj': paginate(questions, request)}
     return render(request, 'index.html', context=context)
+
+
+@require_GET
+def hot(request: HttpRequest) -> HttpResponse:
+    questions = QUESTIONS['questions']
+    context = {'page_obj': paginate(questions, request)}
+    return render(request, 'hot.html', context=context)
+
+
+@require_GET
+def tag(request: HttpRequest, name: str) -> HttpResponse:
+    questions = QUESTIONS['questions']
+    context = {'page_obj': paginate(questions, request), 'tag': {'name': name}}
+    print(context)
+    return render(request, 'tag.html', context=context)
 
 
 @require_GET
@@ -17,11 +34,6 @@ def question(request: HttpRequest, question_id: int) -> HttpResponse:
         if question_item['id'] == question_id:
             context = {'question': question_item}
     return render(request, 'question.html', context=context)
-
-
-@require_GET
-def questions_by_tag(request: HttpRequest, tag: str) -> HttpResponse:
-    return HttpResponse(f'questions tagged {tag}')
 
 
 @require_GET

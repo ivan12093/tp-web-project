@@ -1,19 +1,11 @@
-{% extends 'inc/base.html' %}
-{% load static %}
-{% block content %}
-
-<div class="row">
-   <ul class="list-inline">
+{% extends 'inc/question_list.html' %}
+{% block header %}
+<ul class="list-inline">
       <li class="list-inline-item">
          <a class="inline text-decoration-none link-primary fs-1 text-dark" href="{% url 'index' %}">New questions</a>
       </li>
       <li class="list-inline-item">
-         <a class="inline text-decoration-none m-2 link-primary fs-3 text-secondary" href="{% url 'index' %}">Hot questions</a>
+         <a class="inline text-decoration-none m-2 link-primary fs-3 text-secondary" href="{% url 'hot' %}">Hot questions</a>
       </li>
-   </ul>
-   {% for question in questions %}
-      {% include 'inc/question_item.html' %}
-   {% endfor %}
-   {% include 'inc/paginator.html' %}
-</div>
+</ul>
 {% endblock %}
