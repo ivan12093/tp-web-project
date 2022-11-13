@@ -1,0 +1,76 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% block content %}
+<main class="flex-shrink-0">
+        <a class="text-decoration-none link-primary fs-1 text-dark" href="{% url 'index' %}">New questions</a>
+        <a class="text-decoration-none m-2 link-primary fs-3 text-secondary" href="{% url 'index' %}">Hot questions</a>
+        <div class="row">
+
+                <div class="question">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="avatar">
+                                <img src="{% static 'img/avatar-1.jpg' %}" alt="" />
+                            </div>
+
+                        </div>
+                        <div class="col-10">
+                            <a href="/question/1", class="text-decoration-none"><h2 class="question-title">Question 1</h2></a>
+                            <div class="question-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            Rating
+                        </div>
+                        <div class="col-10">
+                            <label class="fw-bold">tags:</label>
+                            <a>tag1</a>
+                            <a>tag2</a>
+                            <a>tag3</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="avatar">
+                                <img src=".{% static 'img/avatar-2.jpg' %}" alt="" />
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <h2 class="question-title">Question 2</h2>
+                            <div class="question-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="avatar">
+                                <img src="{% static 'img/avatar-3.jpg' %}" alt="" />
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <h2 class="question-title">Question 3</h2>
+                            <div class="question-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+        </div>
+</main>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% block content %}
+<h1>New question</h1>
+<div class="mb-3">
+  <label for="exampleFormControlInput1" class="form-label">Title</label>
+  <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="How to add question?">
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+  <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="I don't know how to ask question on AskMe, please somebody help me"></textarea>
+</div>
+<div class="mb-3">
+  <label for="exampleFormControlInput2" class="form-label">Tags</label>
+  <input type="email" class="form-control" id="exampleFormControlInput2" placeholder="tag1, tag2, tag3">
+</div>
+<button class="w-100 btn btn-lg btn-primary" type="submit">Ask!</button>
+{% endblock %}

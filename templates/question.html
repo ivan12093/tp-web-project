@@ -1,0 +1,65 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-2">
+        <div class="avatar-question">
+            <img src="{% static 'img/avatar-1.jpg' %}" alt="" />
+        </div>
+    </div>
+    <div class="col-10 fs-5">
+        <h1>Question 1</h1>
+        <div class="question-text">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium est fugiat illo iste,
+            porro possimus suscipit. Amet consequuntur cumque dignissimos illo minima molestiae nam
+            nostrum possimus quas suscipit? Aspernatur beatae consequuntur laboriosam libero placeat provident
+            quis, tempora? Nostrum, tenetur!
+        </div>
+        <label class="fw-bold f">tags:</label>
+                            <a>tag1</a>
+                            <a>tag2</a>
+                            <a>tag3</a>
+    </div>
+    <h1>Answers</h1>
+    <div class="question">
+        <div class="row">
+            <div class="col-2">
+                <div class="avatar">
+                    <img src="{% static 'img/avatar-2.jpg' %}" alt="" />
+                </div>
+            </div>
+            <div class="col-10 fs-5">
+                <div class="question-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
+                </div>
+                <br>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">Correct</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="question">
+        <div class="row">
+            <div class="col-2">
+                <div class="avatar">
+                    <img src="{% static 'img/avatar-3.jpg' %}" alt="" />
+                </div>
+            </div>
+            <div class="col-10 fs-5">
+                <div class="question-text">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
+                </div>
+                <br>
+                <div class="form-check fs-5">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">Correct</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
