@@ -2,15 +2,21 @@ from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
+from app.models import QUESTIONS
+
 
 @require_GET
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, 'index.html')
+    context = QUESTIONS
+    return render(request, 'index.html', context=context)
 
 
 @require_GET
 def question(request: HttpRequest, question_id: int) -> HttpResponse:
-    return render(request, 'question.html')
+    for question_item in QUESTIONS['questions']:
+        if question_item['id'] == question_id:
+            context = {'question': question_item}
+    return render(request, 'question.html', context=context)
 
 
 @require_GET

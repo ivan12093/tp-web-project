@@ -2,93 +2,44 @@
 {% load static %}
 {% block content %}
 <div class="row">
-    <div class="col-2">
-        <div class="avatar-question">
-            <img src="{% static 'img/avatar-1.jpg' %}" alt="" />
-        </div>
-        <ul class="list-inline">
-            <li class="list-inline-item col-1 count-vote-author fs-3 fw-bold">
-                <label>30</label>
-            </li>
-            <li class="list-inline-item button-vote-author">
-                <a href="#"><i class="fa fa-heart fa-2x"></i></a>
-            </li>
-        </ul>
-    </div>
-    <div class="col-10 fs-5">
-        <h1>Question 1</h1>
-        <div class="question-text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab accusantium est fugiat illo iste,
-            porro possimus suscipit. Amet consequuntur cumque dignissimos illo minima molestiae nam
-            nostrum possimus quas suscipit? Aspernatur beatae consequuntur laboriosam libero placeat provident
-            quis, tempora? Nostrum, tenetur!
-        </div>
-        <label class="fw-bold f">tags:</label>
-                            <a>tag1</a>
-                            <a>tag2</a>
-                            <a>tag3</a>
-    </div>
-    <h1>Answers</h1>
-    <div class="question">
-        <div class="row">
-            <div class="col-2">
-                <div class="avatar">
-                    <img src="{% static 'img/avatar-2.jpg' %}" alt="" />
-                </div>
-                <ul class="list-inline">
-                    <li class="list-inline-item col-1 count-vote fs-3 fw-bold">
-                        <label>30</label>
-                    </li>
-                    <li class="list-inline-item button-vote">
-                        <a href="#"><i class="fa fa-heart fa-2x"></i></a>
-                    </li>
-                </ul>
+   <div class="col-2">
+      <div class="avatar-question">
+         <img class="text-center" src="{% static 'img/avatar-1.jpg' %}" alt="" />
+      </div>
+      <div class="text text-center margin-top">
+         {{ question.author }}
+      </div>
+      <div class="rating vote-group-question text-center">
+         <div class="text">{{ question.likes }}</div>
+         <div class="text">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+               <button type="button" class="btn btn-outline-success btn-sm">+</button>
+               <button type="button" class="btn btn-outline-danger btn-sm">-</button>
             </div>
-            <div class="col-10 fs-5">
-                <div class="question-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
-                </div>
-                <br>
-                <div class="form-check fs-5">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">Correct</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="question">
-        <div class="row">
-            <div class="col-2">
-                <div class="avatar">
-                    <img src="{% static 'img/avatar-3.jpg' %}" alt="" />
-                </div>
-                <ul class="list-inline">
-                    <li class="list-inline-item col-1 count-vote fs-3 fw-bold">
-                        <label>30</label>
-                    </li>
-                    <li class="list-inline-item button-vote">
-                        <a href="#"><i class="fa fa-heart fa-2x"></i></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-10 fs-5">
-                <div class="question-text">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Dolor ea, expedita hic magnam officia qui quod sed soluta suscipit vitae.
-                </div>
-                <br>
-                <div class="form-check fs-5">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check-label" for="flexCheckDefault">Correct</label>
-                </div>
-            </div>
-        </div>
-    </div>
-    <h1>Add answer</h1>
-    <div class="mb-3">
-    <textarea class="form-control fs-5" id="exampleFormControlTextarea1" rows="10" placeholder="Answering question..." maxlength="1000"></textarea>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit">Submit answer</button>
+         </div>
+      </div>
+   </div>
+   <div class="col-10 fs-5">
+      <h1>{{ question.title }}</h1>
+      <div class="question-text">
+         {{ question.text }}
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-2"></div>
+      <div class="col-10">
+         <a href="/question/1">answers({{ question.answers_number }})</a>
+         {% include 'inc/enum_tags.html' %}
+      </div>
+   </div>
+   <h1>Answers</h1>
+   {% for answer in question.answers %}
+   {% include 'inc/answer_item.html' %}
+   {% endfor %}
+   <h1>Add answer</h1>
+   <div class="mb-3">
+      <textarea class="form-control fs-5" id="exampleFormControlTextarea1" rows="10" placeholder="Answering question..." maxlength="1000"></textarea>
+   </div>
+   <button class="w-100 btn btn-lg btn-primary" type="submit">Submit answer</button>
 </div>
 {% endblock %}

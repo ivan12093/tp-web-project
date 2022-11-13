@@ -13,9 +13,11 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    margin-left: 20%;
     border: 2px solid #006cfa;
     overflow: hidden;
+    display: block;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 .avatar img {
@@ -46,7 +48,8 @@
     width: 120px;
     height: 120px;
     border-radius: 50%;
-    margin-top: 5%;
+    margin-left: auto !important;
+    margin-right: auto !important;
     border: 2px solid #006cfa;
     overflow: hidden;
 }
@@ -55,16 +58,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.button-vote {
-    margin-top: 10% !important;
-    margin-left: 7% !important;
-}
-
-.count-vote {
-    margin-left: 28% !important;
-    margin-right: 10% !important;
 }
 
 .button-vote a {
@@ -84,4 +77,19 @@
 
 .container {
     padding-up: 0% !important;
+}
+
+.question-author {
+    margin-left: 31% !important;
+    margin-top: 5% !important;
+    margin-bottom: 0px;
+}
+
+.question-author-main {
+    margin-left: 16% !important;
+    margin-top: 3% !important;
+}
+
+.margin-top {
+    margin-top: 5%;
 }

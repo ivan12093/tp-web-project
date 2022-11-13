@@ -3,125 +3,17 @@
 {% block content %}
 
 <div class="row">
-      <ul class="list-inline">
-         <li class="list-inline-item">
-            <a class="inline text-decoration-none link-primary fs-1 text-dark" href="{% url 'index' %}">New questions</a>
-         </li>
-         <li class="list-inline-item">
-            <a class="inline text-decoration-none m-2 link-primary fs-3 text-secondary" href="{% url 'index' %}">Hot questions</a>
-         </li>
-      </ul>
-      <div class="question">
-         <div class="row">
-            <div class="col-2">
-               <div class="avatar">
-                  <img src="{% static 'img/avatar-1.jpg' %}" alt="" />
-               </div>
-               <ul class="list-inline">
-                  <li class="list-inline-item col-1 count-vote fs-4 fw-bold">
-                     <label>30</label>
-                  </li>
-                  <li class="list-inline-item button-vote">
-                     <a href="#"><i class="fa fa-heart fa-2x"></i></a>
-                  </li>
-               </ul>
-            </div>
-            <div class="col-10">
-               <a href="/question/1", class="text-decoration-none">
-                  <h2 class="question-title">Question 1</h2>
-               </a>
-               <div class="question-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam cum debitis, ipsa iusto minima provident quo quos repellat sapiente sit soluta sunt tempore temporibus velit, veritatis voluptate voluptatem voluptates. Aspernatur ipsa maiores recusandae? Aliquid cupiditate delectus dolore dolores, illum itaque laborum omnis quae qui quibusdam quis reiciendis saepe voluptas.
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-10">
-               <a href="/question/1">answers(3)</a>
-               <label class="fw-bold">tags:</label>
-               <a>tag1</a>
-               <a>tag2</a>
-               <a>tag3</a>
-            </div>
-         </div>
-      </div>
-      <div class="question">
-         <div class="row">
-            <div class="col-2">
-               <div class="avatar">
-                  <img src="{% static 'img/avatar-2.jpg' %}" alt="" />
-               </div>
-               <ul class="list-inline">
-                  <li class="list-inline-item col-1 count-vote fs-4 fw-bold">
-                     <label>30</label>
-                  </li>
-                  <li class="list-inline-item button-vote">
-                     <a href="#"><i class="fa fa-heart fa-2x"></i></a>
-                  </li>
-               </ul>
-            </div>
-            <div class="col-10">
-               <a href="/question/1", class="text-decoration-none">
-                  <h2 class="question-title">Question 2</h2>
-               </a>
-               <div class="question-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam cum debitis, ipsa iusto minima provident quo quos repellat sapiente sit soluta sunt tempore temporibus velit, veritatis voluptate voluptatem voluptates. Aspernatur ipsa maiores recusandae? Aliquid cupiditate delectus dolore dolores, illum itaque laborum omnis quae qui quibusdam quis reiciendis saepe voluptas.
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-10">
-               <a href="/question/1">answers(3)</a>
-               <label class="fw-bold">tags:</label>
-               <a>tag1</a>
-               <a>tag2</a>
-               <a>tag3</a>
-            </div>
-         </div>
-      </div>
-      <div class="question">
-         <div class="row">
-            <div class="col-2">
-               <div class="avatar">
-                  <img src="{% static 'img/avatar-3.jpg' %}" alt="" />
-               </div>
-               <ul class="list-inline">
-                  <li class="list-inline-item col-1 count-vote fs-4 fw-bold">
-                     <label>30</label>
-                  </li>
-                  <li class="list-inline-item button-vote">
-                     <a href="#"><i class="fa fa-heart fa-2x"></i></a>
-                  </li>
-               </ul>
-            </div>
-            <div class="col-10">
-               <a href="/question/1", class="text-decoration-none">
-                  <h2 class="question-title">Question 3</h2>
-               </a>
-               <div class="question-text">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aperiam cum debitis, ipsa iusto minima provident quo quos repellat sapiente sit soluta sunt tempore temporibus velit, veritatis voluptate voluptatem voluptates. Aspernatur ipsa maiores recusandae? Aliquid cupiditate delectus dolore dolores, illum itaque laborum omnis quae qui quibusdam quis reiciendis saepe voluptas.
-               </div>
-            </div>
-         </div>
-         <div class="row">
-            <div class="col-2"></div>
-            <div class="col-10">
-               <a href="/question/1">answers(3)</a>
-               <label class="fw-bold">tags:</label>
-               <a>tag1</a>
-               <a>tag2</a>
-               <a>tag3</a>
-            </div>
-         </div>
-      </div>
-      <ul class="pagination">
-         <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-         <li class="page-item"><a class="page-link" href="#">1</a></li>
-         <li class="page-item"><a class="page-link" href="#">2</a></li>
-         <li class="page-item"><a class="page-link" href="#">3</a></li>
-         <li class="page-item"><a class="page-link" href="#">Next</a></li>
-      </ul>
+   <ul class="list-inline">
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none link-primary fs-1 text-dark" href="{% url 'index' %}">New questions</a>
+      </li>
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none m-2 link-primary fs-3 text-secondary" href="{% url 'index' %}">Hot questions</a>
+      </li>
+   </ul>
+   {% for question in questions %}
+      {% include 'inc/question_item.html' %}
+   {% endfor %}
+   {% include 'inc/paginator.html' %}
 </div>
 {% endblock %}
