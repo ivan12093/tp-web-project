@@ -1,83 +1,94 @@
 from random import choice, randint
+
 from django.core.management import BaseCommand
+from faker import Faker
+from typing import List
+from app.models import Question, Tag, Answer, User, Likeable
 
 import app.models
 
 
-def fill_db(ratio):
-    users = [
-        app.models.User(username=f"username {i}", password=f"password {i}")
-        for i in range(ratio)
-    ]
-    profiles = [
-        app.models.Profile(user=users[i])
-        for i in range(ratio)
-    ]
-    app.models.Profile.objects.bulk_create(profiles)
-
-    tags = [
-        app.models.Tag(
-            name=f'Tag {i}'
-        )
-        for i in range(ratio)
-    ]
-
-    app.models.Tag.objects.bulk_create(tags)
-
-    questions = [
-        app.models.Question(
-            title=f'Question {i}',
-            text=f'Text {i}',
-            author=choice(profiles),
-            tags=list(set(choice(tags) for k in range(randint(1, 10)))),
-            votes=randint(5, 50),
-            comments=randint(5, 50)
-        )
-        for i in range(ratio * 10)
-    ]
-
-    app.models.Question.objects.bulk_create(questions)
-
-    answers = [0] * ratio * 100
-    for i in range(ratio * 100):
-        question = choice(questions)
-        answers[i] = app.models.Answer(
-            text=f'Text {i}',
-            is_correct=False,
-            question=question,
-            author=question.author,
-        )
-
-    app.models.Answer.objects.bulk_create(answers)
-
-    reactions_question = [
-        app.models.ReactionsQuestion(
-            author=choice(profiles),
-            positive=bool(randint(0, 3)),
-            question=choice(questions)
-        )
-        for i in range(ratio * 50)
-    ]
-
-    app.models.ReactionsQuestion.objects.bulk_create(reactions_question)
-
-    reactions_answer = [
-        app.models.ReactionsAnswers(
-            author=choice(profiles),
-            positive=bool(randint(0, 3)),
-            question=choice(answers)
-        )
-        for i in range(ratio * 150)
-    ]
-
-    app.models.ReactionsAnswers.objects.bulk_create(reactions_answer)
-
-
 class Command(BaseCommand):
+    fake = Faker()
+
     def add_arguments(self, parser):
         # Positional arguments
-        parser.add_argument('ratio', nargs='+', type=int)
+        parser.add_argument('ratio', type=int)
 
     def handle(self, *args, **kwargs):
-        ratio = kwargs['ratio'][0]
-        fill_db(ratio)
+        ratio = kwargs['ratio']
+        self.fill_db(ratio)
+
+    def create_tags(self, amount):
+        tags = [
+            Tag(
+                name=self.fake.word()
+            )
+            for i in range(amount)
+        ]
+        Tag.objects.bulk_create(tags)
+        return tags
+
+    def create_users(self, amount: int):
+        users = []
+        for i in range(amount):
+            user = User(username=self.fake.simple_profile()['username'],
+                        password=self.fake.password()
+                        )
+            users.append(user)
+            user.save()
+        return users
+
+    def create_questions(self, amount: int, users: List[Question],
+                         tags: List[Tag], max_tags_per_question: int = 10):
+        questions = []
+        for i in range(amount):
+            question = Question(
+                title=self.fake.sentence(),
+                text=self.fake.text(max_nb_chars=999),
+                datetime=self.fake.date_time_this_decade(),
+                author=choice(users),
+            )
+            question.save()
+            for _ in range(randint(0, max_tags_per_question)):
+                question.tags.add(choice(tags))
+            questions.append(question)
+        return questions
+
+    def create_answers(self, amount: int, questions: List[Question]):
+        answers = []
+        for i in range(amount):
+            question = choice(questions)
+            answer = Answer(
+                text=self.fake.text(max_nb_chars=randint(100, 300)),
+                related_question=question,
+                author=question.author,
+                is_correct=not bool(randint(0, 10))
+            )
+            answer.save()
+            answers.append(answer)
+        return answers
+
+    def create_reactions(self, count: int, likeables: List[Likeable],
+                         users: List[User]):
+        for i in range(count):
+            likeable = choice(likeables)
+            if randint(0, 10) > 4:
+                likeable.like(choice(users))
+            else:
+                likeable.dislike(choice(users))
+
+    def fill_db(self, ratio):
+        user_amount = ratio
+        question_amount = ratio
+        answer_amount = ratio * 100
+        tag_amount = ratio
+        reaction_amount = ratio * 200
+
+        tags = self.create_tags(tag_amount)
+        profiles = self.create_users(user_amount)
+        questions = self.create_questions(question_amount, profiles,
+                                          tags)
+        answers = self.create_answers(answer_amount, questions)
+        self.create_reactions(reaction_amount, answers + questions,
+                              profiles)

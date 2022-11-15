@@ -1,104 +1,63 @@
 import django.contrib.auth.models
+
 from django.db import models
-from django.db.models import Sum, F
-
-
-class TagModelManager(models.Manager):
-    def get_popular_tags(self):
-        pass
-
-
-class ProfileModelManager(models.Manager):
-    def get_best_members(self):
-        pass
-
-
-class QuestionModelManager(models.Manager):
-    def get_newest_questions(self):
-        return self.all().order_by('id').reverse()
-
-    def get_hottest_questions(self):
-        return self.all().annotate(fieldsum=F('votes') + F('comments')).order_by('fieldsum').reverse()
-
-    def get_questions_by_tag(self, tag):
-        return self.all().filter(tags__name=tag).order_by('id').reverse()
-
-    def get_question_by_id(self, question_id):
-        return self.all().filter(id=question_id)
-
-
-class UserModelManager(django.contrib.auth.models.UserManager):
-    pass
+import app.managers
 
 
 class User(django.contrib.auth.models.User):
-    objects = UserModelManager()
-
-
-class Profile:
-    avatar = models.IntegerField(default=0)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    objects = ProfileModelManager()
+    avatar = models.ImageField(default='img/default_avatar.jpg')
+    objects = app.managers.ProfileModelManager()
 
     def __str__(self):
-        return self.user.name
+        return self.username
+
+
+class Likeable(models.Model):
+    likes = models.ManyToManyField(User, related_name='likes')
+    dislikes = models.ManyToManyField(User, related_name='dislikes')
+
+    def like(self, user: User):
+        self.dislikes.remove(user)
+        self.likes.add(user)
+
+    def dislike(self, user: User):
+        self.likes.remove(user)
+        self.dislikes.add(user)
+
+    def rating(self) -> int:
+        return self.likes.count() - self.dislikes.count()
 
 
 class Tag(models.Model):
     name = models.CharField(max_length=30)
 
-    objects = TagModelManager()
+    objects = app.managers.TagModelManager()
 
     def __str__(self):
         return self.name
 
 
-class Question(models.Model):
-    id = models.AutoField(primary_key=True)
-    title = models.TextField(max_length=100)
+class Question(Likeable):
+    title = models.CharField(max_length=100)
     text = models.TextField(max_length=1000)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    tags = models.ManyToManyField(Tag, null=True)
-    votes = models.IntegerField(default=0)
-    comments = models.IntegerField(default=0)
+    datetime = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField(Tag)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    objects = QuestionModelManager()
+    objects = app.managers.QuestionModelManager()
 
     def __str__(self):
-        return self.title
+        return self.title[:15]
 
 
-class Answer(models.Model):
-    text = models.TextField(max_length=1000)
+class Answer(Likeable):
+    text = models.TextField(1000)
+    datetime = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    related_question = models.ForeignKey(Question, on_delete=models.CASCADE)
     is_correct = models.BooleanField(default=False)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
-    objects = models.Manager()
+    objects = app.managers.AnswerModelManager()
 
     def __str__(self):
-        return self.text
-
-
-class ReactionsQuestion(models.Model):
-    id = models.AutoField(primary_key=True)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    positive = models.BooleanField()
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.id
-
-
-class ReactionsAnswers(models.Model):
-    id = models.AutoField(primary_key=True)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    positive = models.BooleanField()
-    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
-
-    objects = models.Manager()
-
-    def __str__(self):
-        return self.id
+        return self.title[:15]
