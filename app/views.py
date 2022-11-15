@@ -2,37 +2,51 @@ from django.http import HttpResponse, HttpRequest
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
-from app.models import QUESTIONS
+from app.models import Question, Tag, User
 from app.utils import paginate
+
+
+def question_list(page, context=None):
+    if context is None:
+        context = {}
+    popular_tags = Tag.objects.get_popular_tags()
+    best_members = User.objects.get_best_members()
+    context['page_obj'] = page
+    context['popular_tags'] = popular_tags
+    context['best_members'] = best_members
+    return context
 
 
 @require_GET
 def index(request: HttpRequest) -> HttpResponse:
-    questions = QUESTIONS['questions']
-    context = {'page_obj': paginate(questions, request)}
-    return render(request, 'index.html', context=context)
+    questions = Question.objects.get_newest_questions()
+    page = paginate(questions, request)
+    return render(request, 'index.html',
+                  context=question_list(page))
 
 
 @require_GET
 def hot(request: HttpRequest) -> HttpResponse:
-    questions = QUESTIONS['questions']
-    context = {'page_obj': paginate(questions, request)}
-    return render(request, 'hot.html', context=context)
+    questions = Question.objects.get_hottest_questions()
+    page = paginate(questions, request)
+    return render(request, 'hot.html',
+                  context=question_list(page))
 
 
 @require_GET
 def tag(request: HttpRequest, name: str) -> HttpResponse:
-    questions = QUESTIONS['questions']
-    context = {'page_obj': paginate(questions, request), 'tag': {'name': name}}
-    print(context)
-    return render(request, 'tag.html', context=context)
+    questions = Question.objects.get_questions_by_tag(name)
+    page = paginate(questions, request)
+    context = {'tag': {'name': name}}
+    return render(request, 'tag.html',
+                  context=question_list(page, context=context))
 
 
 @require_GET
 def question(request: HttpRequest, question_id: int) -> HttpResponse:
-    for question_item in QUESTIONS['questions']:
-        if question_item['id'] == question_id:
-            context = {'question': question_item}
+    # Добавить 404, если такого вопроса нет
+    question_item = Question.objects.get_question_by_id(question_id)[0]
+    context = {'question': question_item}
     return render(request, 'question.html', context=context)
 
 
