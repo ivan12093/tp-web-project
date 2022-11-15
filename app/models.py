@@ -6,7 +6,7 @@ import app.managers
 
 class User(django.contrib.auth.models.User):
     avatar = models.ImageField(default='img/default_avatar.jpg')
-    objects = app.managers.ProfileModelManager()
+    objects = app.managers.UserModelManager()
 
     def __str__(self):
         return self.username
@@ -24,6 +24,7 @@ class Likeable(models.Model):
         self.likes.remove(user)
         self.dislikes.add(user)
 
+    @property
     def rating(self) -> int:
         return self.likes.count() - self.dislikes.count()
 

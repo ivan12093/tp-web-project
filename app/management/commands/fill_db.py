@@ -1,6 +1,7 @@
 from random import choice, randint
 
 from django.core.management import BaseCommand
+from django.db import IntegrityError
 from faker import Faker
 from typing import List
 from app.models import Question, Tag, Answer, User, Likeable
@@ -31,12 +32,18 @@ class Command(BaseCommand):
 
     def create_users(self, amount: int):
         users = []
-        for i in range(amount):
+        i = 0
+        while i < amount:
             user = User(username=self.fake.simple_profile()['username'],
                         password=self.fake.password()
                         )
-            users.append(user)
-            user.save()
+            try:
+                user.save()
+                users.append(user)
+                i += 1
+            except IntegrityError:
+                pass
+
         return users
 
     def create_questions(self, amount: int, users: List[Question],
@@ -73,7 +80,7 @@ class Command(BaseCommand):
                          users: List[User]):
         for i in range(count):
             likeable = choice(likeables)
-            if randint(0, 10) > 4:
+            if randint(0, 10) > 3:
                 likeable.like(choice(users))
             else:
                 likeable.dislike(choice(users))
