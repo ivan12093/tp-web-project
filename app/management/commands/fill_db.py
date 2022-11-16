@@ -6,8 +6,6 @@ from faker import Faker
 from typing import List
 from app.models import Question, Tag, Answer, User, Likeable
 
-import app.models
-
 
 class Command(BaseCommand):
     fake = Faker()
@@ -21,12 +19,12 @@ class Command(BaseCommand):
         self.fill_db(ratio)
 
     def create_tags(self, amount):
-        tags = [
-            Tag(
-                name=self.fake.word()
-            )
-            for i in range(amount)
-        ]
+        tags = set()
+        while len(tags) < amount:
+            tag = Tag(name=self.fake.word())
+            if tag not in tags:
+                tags.add(tag)
+        tags = list(tags)
         Tag.objects.bulk_create(tags)
         return tags
 
@@ -62,14 +60,15 @@ class Command(BaseCommand):
             questions.append(question)
         return questions
 
-    def create_answers(self, amount: int, questions: List[Question]):
+    def create_answers(self, amount: int, questions: List[Question],
+                       users: List[User]):
         answers = []
         for i in range(amount):
             question = choice(questions)
             answer = Answer(
                 text=self.fake.text(max_nb_chars=randint(100, 300)),
                 related_question=question,
-                author=question.author,
+                author=choice(users),
                 is_correct=not bool(randint(0, 10))
             )
             answer.save()
@@ -87,15 +86,15 @@ class Command(BaseCommand):
 
     def fill_db(self, ratio):
         user_amount = ratio
-        question_amount = ratio
+        question_amount = ratio * 10
         answer_amount = ratio * 100
         tag_amount = ratio
         reaction_amount = ratio * 200
 
         tags = self.create_tags(tag_amount)
-        profiles = self.create_users(user_amount)
-        questions = self.create_questions(question_amount, profiles,
+        users = self.create_users(user_amount)
+        questions = self.create_questions(question_amount, users,
                                           tags)
-        answers = self.create_answers(answer_amount, questions)
+        answers = self.create_answers(answer_amount, questions, users)
         self.create_reactions(reaction_amount, answers + questions,
-                              profiles)
+                              users)
