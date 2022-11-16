@@ -4,13 +4,13 @@
 <div class="row">
    <div class="col-2">
       <div class="avatar-question">
-         <img class="text-center" src="{% static 'img/avatar-1.jpg' %}" alt="" />
+         <img class="text-center" src="{% static question.author.avatar %}" alt="" />
       </div>
       <div class="text text-center margin-top">
-         {{ question.author }}
+         {{ question.author.username }}
       </div>
       <div class="rating vote-group-question text-center">
-         <div class="text">{{ question.likes }}</div>
+         <div class="text">{{ question.rating }}</div>
          <div class="text">
             <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                <button type="button" class="btn btn-outline-success btn-sm">+</button>
@@ -28,12 +28,12 @@
    <div class="row">
       <div class="col-2"></div>
       <div class="col-10">
-         <a href="/question/1">answers({{ question.answers_number }})</a>
+         <a href="/question/1">answers({{ question.answer_set.count }})</a>
          {% include 'inc/enum_tags.html' %}
       </div>
    </div>
    <h1>Answers</h1>
-   {% for answer in question.answers %}
+   {% for answer in question.answer_set.all %}
    {% include 'inc/answer_item.html' %}
    {% endfor %}
    <h1>Add answer</h1>

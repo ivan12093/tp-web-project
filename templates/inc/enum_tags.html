@@ -1,4 +1,4 @@
 <label class="fw-bold">tags:</label>
-{% for tag in question.tags %}
+{% for tag in question.tags.all %}
     <a href="{% url 'tag' name=tag.name %}">{{ tag.name }}</a>
 {% endfor %}
