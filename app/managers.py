@@ -4,7 +4,7 @@ from django.db.models import Manager, Count
 class TagModelManager(Manager):
     def get_popular_tags(self):
         return self.values('name')\
-            .annotate(count_questions=Count('name'))\
+            .annotate(count_questions=Count('question'))\
             .order_by('-count_questions')
 
 

@@ -30,7 +30,7 @@ class Likeable(models.Model):
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, primary_key=True)
 
     objects = app.managers.TagModelManager()
 

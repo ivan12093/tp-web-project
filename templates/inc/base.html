@@ -47,63 +47,31 @@
                 {% block content %}
                 {% endblock %}
             </div>
-            <div class="col-3">
+            <div class="p-2 p-sm-2 col-3">
                 <div class="justify-content-around fs-4">
                     <h1 class="text-center">
                     Popular Tags
                     </h1>
-                    <div class="d-flex flex-row">
-                        <div class="col text-center">
-                          <a>tag1</a>
-                        </div>
-                        <div class="col text-center">
-                          <a>tag2</a>
-                        </div>
-                        <div class="col text-center">
-                          <a>tag4</a>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-around">
-                        <div class="col text-center">
-                          <a>tag1</a>
-                        </div>
-                        <div class="col text-center">
-                          <a>tag5</a>
-                        </div>
-                        <div class="col text-center">
-                          <a>tag6</a>
-                        </div>
-                    </div>
-                <br><br>
+                    <span class="col-auto" role="group">
+                        {% for tag in popular_tags %}
+                            <a class="text-decoration-none" href="{% url 'tag' name=tag.name %}">
+                                {{ tag.name }}
+                            </a>
+                        {% endfor %}
+                    </span>
+                </div>
+                <br>
                 <div class="justify-content-around fs-4">
                     <h1 class="text-center">
                     Best Members
                     </h1>
-                    <div class="d-flex flex-row">
-                        <div class="col text-center">
-                          Vasya Pupkin
+                    {% for member in best_members %}
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                {{ member.username }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-around">
-                        <div class="col text-center">
-                          Petya Pupkin
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-around">
-                        <div class="col text-center">
-                          Maxim Pupkin
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-around">
-                        <div class="col text-center">
-                          Vova Pupkin
-                        </div>
-                    </div>
-                    <div class="d-flex flex-row justify-content-around">
-                        <div class="col text-center">
-                          Vanya Pupkin
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
