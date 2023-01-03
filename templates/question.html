@@ -33,9 +33,10 @@
       </div>
    </div>
    <h1>Answers</h1>
-   {% for answer in question.answer_set.all %}
+   {% for answer in question.answers %}
    {% include 'inc/answer_item.html' %}
    {% endfor %}
+    {% include 'inc/paginator.html' %}
    <h1>Add answer</h1>
    <div class="mb-3">
       <textarea class="form-control fs-5" id="exampleFormControlTextarea1" rows="10" placeholder="Answering question..." maxlength="1000"></textarea>

@@ -46,15 +46,16 @@ def tag(request: HttpRequest, name: str) -> HttpResponse:
 @require_GET
 def question(request: HttpRequest, question_id: int) -> HttpResponse:
     try:
-        question_item = Question.objects.get_question_by_id(question_id)[0]
+        question_item = Question.objects.get_question_by_id(question_id).first()
     except IndexError:
         raise Http404
-    context = {'question': question_item}
+    question_item.answers = paginate(question_item.answer_set.all(), request)
+    context = {'question': question_item, 'page_obj': question_item.answers}
     return render(request, 'question.html', context=add_sidebar_info(context))
 
 
-@require_GET
 def login(request: HttpRequest) -> HttpResponse:
+    print(request.POST)
     return render(request, 'login.html', context=add_sidebar_info())
 
 

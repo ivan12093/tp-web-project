@@ -4,7 +4,7 @@ from django.db import models
 import app.managers
 
 
-class User(django.contrib.auth.models.User):
+class User(django.contrib.auth.models.AbstractUser):
     avatar = models.ImageField(default='img/default_avatar.jpg')
     objects = app.managers.UserModelManager()
 
@@ -15,18 +15,21 @@ class User(django.contrib.auth.models.User):
 class Likeable(models.Model):
     likes = models.ManyToManyField(User, related_name='likes')
     dislikes = models.ManyToManyField(User, related_name='dislikes')
+    rating = models.IntegerField(default=0)
 
     def like(self, user: User):
         self.dislikes.remove(user)
-        self.likes.add(user)
+        if not self.likes.contains(user):
+            self.likes.add(user)
+            self.rating += 1
+            self.save()
 
     def dislike(self, user: User):
         self.likes.remove(user)
-        self.dislikes.add(user)
-
-    @property
-    def rating(self) -> int:
-        return self.likes.count() - self.dislikes.count()
+        if not self.dislikes.contains(user):
+            self.dislikes.add(user)
+            self.rating -= 1
+            self.save()
 
 
 class Tag(models.Model):
