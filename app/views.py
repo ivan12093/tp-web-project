@@ -2,13 +2,15 @@ from math import ceil
 
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpRequest, Http404
+from django.core.exceptions import PermissionDenied
+from django.forms import model_to_dict
+from django.http import HttpResponse, HttpRequest, Http404, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_GET, require_http_methods, require_POST
 
 from app.forms import LoginForm, RegisterForm, UpdateUserForm, CreateQuestionForm, CreateAnswerForm
-from app.models import Question, Tag, User
+from app.models import Question, Tag, User, Likeable, Answer
 from app.utils import paginate, DEFAULT_PER_PAGE
 
 
@@ -50,14 +52,14 @@ def tag(request: HttpRequest, name: str) -> HttpResponse:
 
 
 def question(request: HttpRequest, question_id: int) -> HttpResponse:
-    question_item = Question.objects.get_question_by_id(question_id).first()
+    question_item = Question.objects.get_question_by_id(question_id)
     if not question_item:
         raise Http404
     if request.method == 'GET':
         answer_form = CreateAnswerForm()
     if request.method == 'POST':
         if not request.user.is_authenticated:
-            return redirect(f'login/?next=question/{question_id}')
+            return redirect(f'login/?continue=question/{question_id}')
         answer_form = CreateAnswerForm(data=request.POST)
         if answer_form.is_valid():
             answer = answer_form.save(request.user, question_item)
@@ -80,7 +82,7 @@ def login(request: HttpRequest) -> HttpResponse:
             user = auth.authenticate(request, **user_form.cleaned_data)
             if user is not None and user.is_active:
                 auth.login(request, user)
-                redirect_path = request.GET.get('next') or '/'
+                redirect_path = request.GET.get('continue') or '/'
                 return redirect(redirect_path)
             else:
                 user_form.add_error(field=None, error='Wrong username or password')
@@ -111,7 +113,7 @@ def logout(request: HttpRequest) -> HttpResponse:
     return redirect(redirect_path)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login', redirect_field_name='continue')
 def ask(request: HttpRequest) -> HttpResponse:
     if request.method == 'GET':
         question_form = CreateQuestionForm()
@@ -126,24 +128,83 @@ def ask(request: HttpRequest) -> HttpResponse:
     return render(request, 'ask.html', context=context)
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login', redirect_field_name='continue')
+@require_http_methods(['GET', 'POST'])
 def settings(request: HttpRequest) -> HttpResponse:
-    user = User.objects.get(username=request.user)
+    user_id = request.user.id
     if request.method == 'GET':
-        user_data = {'email': user.email,
-                     'username': user.username,
-                     'password': '',
-                     'avatar': '/static/' + str(user.avatar)
-                     }
-        update_form = UpdateUserForm(user_data, instance=user)
+        user_data = model_to_dict(request.user)
+        user_data.pop('password')
+        user_data.pop('avatar')
+        update_form = UpdateUserForm(initial=user_data)
     if request.method == 'POST':
-        update_form = UpdateUserForm(data=request.POST, instance=user)
+        update_form = UpdateUserForm(data=request.POST, files=request.FILES, instance=request.user)
         if update_form.is_valid():
             update_form.save()
             user = auth.authenticate(request, **update_form.cleaned_data)
             auth.login(request, user)
             return redirect(reverse('settings'))
+        else:
+            request.user = User.objects.get(id=user_id)
 
     context = add_sidebar_info()
     context['form'] = update_form
     return render(request, 'settings.html', context=context)
+
+
+@require_POST
+@login_required(login_url='/login', redirect_field_name='continue')
+def like(request: HttpRequest):
+    object_type = request.POST['object_type']
+    item_id = request.POST['id']
+    if object_type == 'question':
+        item = Question.objects.get_question_by_id(item_id)
+    else:
+        item = Answer.objects.get_answer_by_id(item_id)
+    if not item:
+        return JsonResponse({'status': 'not found'})
+    if item.has_liked_by(request.user):
+        item.unlike(request.user)
+    else:
+        item.like(request.user)
+    return JsonResponse({
+        'status': 'ok',
+        'rating': item.rating
+    })
+
+
+@require_POST
+@login_required(login_url='/login', redirect_field_name='continue')
+def dislike(request: HttpRequest):
+    object_type = request.POST['object_type']
+    item_id = request.POST['id']
+    if object_type == 'question':
+        item = Question.objects.get_question_by_id(item_id)
+    else:
+        item = Answer.objects.get_answer_by_id(item_id)
+    if not item:
+        return JsonResponse({'status': 'not found'})
+    if item.has_disliked_by(request.user):
+        item.undislike(request.user)
+    else:
+        item.dislike(request.user)
+    return JsonResponse({
+        'status': 'ok',
+        'rating': item.rating
+        })
+
+@require_POST
+@login_required(login_url='/login', redirect_field_name='continue')
+def correct(request: HttpRequest):
+    question_id = request.POST['question_id']
+    answer_id = request.POST['answer_id']
+    is_correct = request.POST['correct'] == 'true'
+
+    question_item = Question.objects.get_question_by_id(question_id)
+    if question_item.author != request.user:
+        raise PermissionDenied()
+
+    answer_item = Answer.objects.get_answer_by_id(answer_id)
+    answer_item.set_correctness(is_correct)
+
+    return JsonResponse({'status': 'ok', 'correct': is_correct})

@@ -54,15 +54,13 @@ class UpdateUserForm(forms.ModelForm):
 
     def clean_current_password(self):
         if not self.instance.check_password(self.cleaned_data['current_password']):
-            raise ValidationError('Wrong password!')
+            raise ValidationError('Wrong current password!')
         return self.cleaned_data['current_password']
 
     def save(self):
-        print(self.instance.email, self.instance.username, self.instance.password)
         self.instance.email = self.cleaned_data['email']
         self.instance.username = self.cleaned_data['username']
         if self.cleaned_data['password']:
-            print(f'Password - {self.cleaned_data["password"]}')
             self.instance.set_password(self.cleaned_data['password'])
         self.instance.save()
 

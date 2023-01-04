@@ -29,8 +29,9 @@ class QuestionModelManager(Manager):
         return self.all().filter(tags__name=tag).order_by('-datetime').reverse()
 
     def get_question_by_id(self, question_id):
-        return self.all().filter(id=question_id)
+        return self.all().filter(id=question_id).first()
 
 
 class AnswerModelManager(Manager):
-    pass
+    def get_answer_by_id(self, answer_id):
+        return self.all().filter(id=answer_id).first()

@@ -4,17 +4,17 @@
             <div class="col-2">
                 <a id="{{ answer.id }}"></a>
                 <div class="avatar">
-                    <img src="{% static answer.author.avatar %}" alt="" />
+                    <img src="{% get_media_prefix %}/{{ answer.author.avatar }}" alt="" />
                 </div>
                 <div class="text text-center margin-top">
                     {{ answer.author }}
                 </div>
                 <div class="rating vote-group">
-                   <div class="text text-center">{{ answer.rating }}</div>
+                   <div id='answer-rating-{{ answer.id }}' class="text text-center">{{ answer.rating }}</div>
                    <div class="text text-center">
                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                           <button type="button" class="btn btn-outline-success btn-sm">+</button>
-                           <button type="button" class="btn btn-outline-danger btn-sm">-</button>
+                           <button data-type="answer" data-id="{{ answer.id }}" type="button" class="btn btn-outline-success btn-sm">+</button>
+                           <button data-type="answer" data-id="{{ answer.id }}"type="button" class="btn btn-outline-danger btn-sm">-</button>
                        </div>
                    </div>
                 </div>
@@ -30,8 +30,20 @@
         <div class="col-2"></div>
         <div class="col-10">
             <div class="form-check fs-5">
-                <input class="form-check-input" type="checkbox" value="true" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">Correct</label>
+                {% if request.user == question.author %}
+                    {% if answer.is_correct %}
+                        <input data-id="{{ answer.id }}" class="form-check-input" type="checkbox" value="true" id="correct-checkbox-{{ answer.id }}" checked>
+                    {% else %}
+                        <input data-id="{{ answer.id }}" class="form-check-input" type="checkbox" value="true" id="correct-checkbox-{{ answer.id }}">
+                    {% endif %}
+                {% else %}
+                    {% if answer.is_correct %}
+                        <input disabled data-id="{{ answer.id }}" class="form-check-input" type="checkbox" value="true" id="correct-checkbox-{{ answer.id }}" checked>
+                    {% else %}
+                        <input disabled data-id="{{ answer.id }}" class="form-check-input" type="checkbox" value="true" id="correct-checkbox-{{ answer.id }}">
+                    {% endif %}
+                {% endif %}
+                <label class="form-check-label" for="correct-checkbox-{{ answer.id }}">Correct</label>
             </div>
         </div>
     </div>

@@ -26,17 +26,20 @@
             </li>
         </ul>
 
-        <form id="main_form" class="col-12 m-auto" role="search">
+        <form id="main_form" class="col-10 m-auto" role="search">
           <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
         </form>
 
-        <div>
+        <div style="display: flex; justify-content: center;">
             {% if not user.is_authenticated %}
             <a href="{% url 'login' %}"><button type="button" class="btn btn-outline-light me-2">Login</button></a>
             <a href="{% url 'signup' %}"><button type="button" class="btn btn-warning">Sign-up</button></a>
             {% else %}
-                <a href="{% url 'settings' %}">{{ user.username }}</a>
-                <a href="{% url 'logout' %}?next={{ request.path }}"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
+                <div class="avatar me-3" style="width: 50px; height: 50px; display: inline-block">
+                    <img src="{% get_media_prefix %}/{{ user.avatar }}" alt=""/>
+                </div>
+                <a class="mt-2" href="{% url 'settings' %}"><button type="button" class="btn btn-outline-light me-2">Settings</button></a>
+                <a class="mt-2" href="{% url 'logout' %}?continue={{ request.path }}"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
             {% endif %}
         </div>
       </div>
@@ -89,6 +92,13 @@
         <span class="text-muted">Place sticky footer content here.</span>
     </div>
 </footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src={% static 'js/main.js' %}></script>
+<script>
+    var csrftoken = '{{ csrf_token }}'
+</script>
 
 </body>
 </html>

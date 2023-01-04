@@ -4,12 +4,16 @@
 {% block content %}
 <div class="container">
   <main class="form-signin w-100 m-auto">
-    <form novalidate action="{{ request.path }}" method="post">
-      {% csrf_token %}
-        {% bootstrap_form form %}
-      <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
-      <p class="mt-5 mb-3 text-muted">AskMe &copy; 2017–2022</p>
-    </form>
+      <h1>{{ user.username }}'s profile</h1>
+      <div class="avatar" style="width: 200px; height: 200px;">
+          <img src="{{ user.avatar.url }}" alt="" />
+       </div>
+        <form novalidate action="{{ request.path }}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+            {% bootstrap_form form %}
+          <button class="w-100 btn btn-lg btn-primary" type="submit">Save</button>
+          <p class="mt-5 mb-3 text-muted">AskMe &copy; 2017–2022</p>
+        </form>
   </main>
 </div>
 {% endblock %}
