@@ -1,5 +1,6 @@
 {% extends 'inc/base.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block content %}
 <div class="row">
    <div class="col-2">
@@ -38,9 +39,10 @@
    {% endfor %}
     {% include 'inc/paginator.html' %}
    <h1>Add answer</h1>
-   <div class="mb-3">
-      <textarea class="form-control fs-5" id="exampleFormControlTextarea1" rows="10" placeholder="Answering question..." maxlength="1000"></textarea>
-   </div>
-   <button class="w-100 btn btn-lg btn-primary" type="submit">Submit answer</button>
+    <form novalidate action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Submit answer</button>
+    </form>
 </div>
 {% endblock %}

@@ -32,9 +32,11 @@ class Command(BaseCommand):
         users = []
         i = 0
         while i < amount:
-            user = User(username=self.fake.simple_profile()['username'],
-                        password=self.fake.password()
-                        )
+            _profile = self.fake.simple_profile()
+            user = User.objects.create_user(username=_profile['username'],
+                                            email=_profile['mail'],
+                                            password=self.fake.password()
+                                            )
             try:
                 user.save()
                 users.append(user)

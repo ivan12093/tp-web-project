@@ -26,5 +26,6 @@ urlpatterns = [
     path('ask', app.views.ask, name='ask'),
     path('settings', app.views.settings, name='settings'),
     path('hot', app.views.hot, name='hot'),
-    path('tag/<str:name>', app.views.tag, name='tag')
+    path('tag/<str:name>', app.views.tag, name='tag'),
+    path('logout', app.views.logout, name='logout')
 ]

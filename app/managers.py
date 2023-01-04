@@ -1,3 +1,4 @@
+from django.contrib.auth.models import UserManager
 from django.db.models import Manager, Count
 
 
@@ -8,7 +9,7 @@ class TagModelManager(Manager):
             .order_by('-count_questions')
 
 
-class UserModelManager(Manager):
+class UserModelManager(UserManager):
     def get_best_members(self):
         return self.values('username')\
             .annotate(count_answers=Count('answer'))\

@@ -30,7 +30,7 @@
  <div class="row">
     <div class="col-2"></div>
     <div class="col-10">
-       <a href="/question/1">answers({{ question.answer_set.count }})</a>
+       <a href="{% url 'question' question_id=question.id %}">answers({{ question.answer_set.count }})</a>
         {% include 'inc/enum_tags.html' %}
     </div>
  </div>
