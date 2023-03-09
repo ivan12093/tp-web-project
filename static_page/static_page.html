@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html class="h-100" lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AskMe</title>
+    <link rel="shortcut icon" type="image/x-icon" href="">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" ,="" rel="stylesheet">
+
+</head>
+<body class="d-flex flex-column h-100">
+
+<header class="p-1 text-bg-dark">
+    <div class="header-container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <ul class="nav col-12 col-lg-auto m-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/" class="nav-link px-2 text-white"><h3>AskMe</h3></a></li>
+            <li><a href="/ask" class="nav-link px-2 text-white">
+                <button id="add_question" type="button" class="btn btn-danger">
+                    Ask question!
+                </button>
+                </a>
+            </li>
+        </ul>
+
+        <form id="main_form" class="col-10 m-auto" role="search">
+          <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+        </form>
+
+        <div style="display: flex; justify-content: center;">
+
+                <div class="avatar me-3" style="width: 50px; height: 50px; display: inline-block">
+                    <img src="/media//img/2023/01/04/IMG_7614_tjrVwtA.jpg" alt="">
+                </div>
+                <a class="mt-2" href="/settings"><button type="button" class="btn btn-outline-light me-2">Settings</button></a>
+                <a class="mt-2" href="/logout?continue=/"><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
+
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-9">
+
+
+<div class="row">
+
+<ul class="list-inline">
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none link-primary fs-1 text-dark" href="/">New questions</a>
+      </li>
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none m-2 link-primary fs-3 text-secondary" href="/hot">Hot questions</a>
+      </li>
+</ul>
+
+
+
+<div class="question">
+ <div class="row">
+    <div class="col-2">
+       <div class="avatar">
+          <img src="/media/img/default_avatar.jpg" alt="">
+       </div>
+       <div class="text text-center margin-top">
+          woodardbrian
+       </div>
+       <div class="rating vote-group">
+           <div id="question-rating-18" class="text text-center">0</div>
+           <div class="text text-center">
+               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                   <button data-type="question" data-id="18" type="button" class="btn btn-outline-success btn-sm">+</button>
+                   <button data-type="question" data-id="18" type="button" class="btn btn-outline-danger btn-sm">-</button>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="col-10">
+       <a href="/question/18" class="text-decoration-none">
+          <h2 class="question-title">Sell land just wide.</h2>
+       </a>
+       <div class="question-text">
+          About old describe difficult information. Hotel consumer recent carry.
+Citizen week cover control worker become government two. North give fine guess.
+One they commercial politics this. About poor space husband.
+Seem he air benefit.
+Week new have with.
+Protect manager beyond actually network cut. Environmental choose huge point. Training capital claim group.
+Rise job main including relationship. Thing road material. Program scientist simple television actually church design.
+Character lay list smile pattern admit. Employee he part else head reason article process.
+Huge leave admit father environmental cup camera. Top magazine base environment attorney minute industry.
+Ahead state few about image article agent challenge. Read stage join green. Car whom like girl.
+Oil walk wife. Both church health.
+Avoid see structure identify sell imagine start not. Range occur high.
+They bad network call leader necessary five. Easy floor structure best country. Discussion western food guy attack.
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+       <a href="/question/18">answers(9)</a>
+        <label class="fw-bold">tags:</label>
+
+
+    </div>
+ </div>
+</div>
+
+
+
+<div class="question">
+ <div class="row">
+    <div class="col-2">
+       <div class="avatar">
+          <img src="/media/img/default_avatar.jpg" alt="">
+       </div>
+       <div class="text text-center margin-top">
+          sara41
+       </div>
+       <div class="rating vote-group">
+           <div id="question-rating-20" class="text text-center">0</div>
+           <div class="text text-center">
+               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                   <button data-type="question" data-id="20" type="button" class="btn btn-outline-success btn-sm">+</button>
+                   <button data-type="question" data-id="20" type="button" class="btn btn-outline-danger btn-sm">-</button>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="col-10">
+       <a href="/question/20" class="text-decoration-none">
+          <h2 class="question-title">Improve reach past player manager bar us.</h2>
+       </a>
+       <div class="question-text">
+          Color example debate left security our. Tell window lawyer size.
+Be take easy hour report year.
+Smile together site be. Executive finally although debate technology. State little instead society let these school ok.
+Mission artist senior. Drug energy and wife. Business paper matter responsibility how plan season floor. Meeting stuff power finally experience next where.
+Future research step analysis bill another. Investment black cause buy seat issue. Cell candidate article poor often.
+Hard third product sound simply. Church soon it ago several team include. Treat item eight win federal member.
+Site can something study board. My not local product left bank.
+Unit PM blue over huge state. Similar according sure good.
+Modern none nice suffer others maybe. Item foreign wrong film certainly official skill.
+Exactly drop standard. Director purpose live feeling. Might free oil there.
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+       <a href="/question/20">answers(12)</a>
+        <label class="fw-bold">tags:</label>
+
+
+    </div>
+ </div>
+</div>
+
+
+
+<div class="question">
+ <div class="row">
+    <div class="col-2">
+       <div class="avatar">
+          <img src="/media/img/default_avatar.jpg" alt="">
+       </div>
+       <div class="text text-center margin-top">
+          vcruz
+       </div>
+       <div class="rating vote-group">
+           <div id="question-rating-24" class="text text-center">0</div>
+           <div class="text text-center">
+               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                   <button data-type="question" data-id="24" type="button" class="btn btn-outline-success btn-sm">+</button>
+                   <button data-type="question" data-id="24" type="button" class="btn btn-outline-danger btn-sm">-</button>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="col-10">
+       <a href="/question/24" class="text-decoration-none">
+          <h2 class="question-title">Money their ago draw.</h2>
+       </a>
+       <div class="question-text">
+          Human character control however card may alone left. Executive theory interest model among. Guess once fund effect. Save participant eat it.
+Others answer stand decide truth prevent court. Mean question him section house.
+Interest yeah turn do. Particularly deep product miss street soon. Feel story most.
+At just significant source film. Ever force point investment indicate institution community man.
+Arrive allow process box relationship write. Leader dark perform chance.
+Most ever country social around.
+Pass if a true. Candidate beat other international set good. Wide mean close key within suddenly.
+A shake she miss live visit. A special vote task walk itself might. Again peace up sort example.
+Blood result might better nation everybody. Political school set cost nearly of. Operation service space real throw sometimes.
+Impact shoulder five expert account how. Term picture red threat subject mission certainly.
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+       <a href="/question/24">answers(9)</a>
+        <label class="fw-bold">tags:</label>
+
+    <a href="/tag/short">short</a>
+
+    <a href="/tag/article">article</a>
+
+
+    </div>
+ </div>
+</div>
+
+
+   <ul class="pagination">
+
+        <li class="page-item"><a class="page-link active" href="?p=1">1</a></li>
+
+
+            <li class="page-item"><a class="page-link" href="?p=2">2</a></li>
+
+        <li class="page-item"><a class="page-link" href="?p=69">69</a></li>
+        <li class="page-item"><a class="page-link" href="?p=2">Next</a></li>
+
+</ul>
+</div>
+
+            </div>
+            <div class="p-2 p-sm-2 col-3">
+                <div class="justify-content-around fs-4">
+                    <h1 class="text-center">
+                    Popular Tags
+                    </h1>
+                    <span class="col-auto" role="group">
+
+                            <a class="text-decoration-none" href="/tag/popular">
+                                popular
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/environment">
+                                environment
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/truth">
+                                truth
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/strategy">
+                                strategy
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/candidate">
+                                candidate
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/have">
+                                have
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/staff">
+                                staff
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/health">
+                                health
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/reality">
+                                reality
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/short">
+                                short
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/own">
+                                own
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/focus">
+                                focus
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/white">
+                                white
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/article">
+                                article
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/enough">
+                                enough
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/any">
+                                any
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/out">
+                                out
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/resource">
+                                resource
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/idea">
+                                idea
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/suddenly">
+                                suddenly
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/ololo">
+                                ololo
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/bla">
+                                bla
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/alo">
+                                alo
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/tech">
+                                tech
+                            </a>
+
+                            <a class="text-decoration-none" href="/tag/wdawd">
+                                wdawd
+                            </a>
+
+                    </span>
+                </div>
+                <br>
+                <div class="justify-content-around fs-4">
+                    <h1 class="text-center">
+                    Best Members
+                    </h1>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                ltaylor
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                uwoodard
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                sara41
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                grahamkelly
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                sharonschneider
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                johncross
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                davidware
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                jennifersanchez
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                wheelernicholas
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                hillaaron
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                woodardbrian
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                padillasarah
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                cheryl75
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-row justify-content-around">
+                            <div class="col text-center">
+                                wrightstacey
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+    </div>
+</footer>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="/static/js/main.js"></script>
+<script>
+    var csrftoken = 'tOZnaWClyRKOByATjShvQpkp5BR85Vvu5FBRjOU2GupvHODONd6UFTBBND2oezT7'
+</script>
+
+
+
+</body></html>
