@@ -1,0 +1,11 @@
+{% extends 'inc/question_list.html' %}
+{% block header %}
+<ul class="list-inline">
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none link-primary fs-1 text-dark" href="{% url 'index' %}">New questions</a>
+      </li>
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none m-2 link-primary fs-3 text-secondary" href="{% url 'hot' %}">Hot questions</a>
+      </li>
+</ul>
+{% endblock %}

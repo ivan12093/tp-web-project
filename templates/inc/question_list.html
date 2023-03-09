@@ -1,0 +1,14 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row">
+   {% block header %}
+   {% endblock %}
+   {% for question in page_obj.object_list %}
+      {% include 'inc/question_item.html' %}
+   {% endfor %}
+   {% include 'inc/paginator.html' %}
+</div>
+{% endblock %}
+</html>

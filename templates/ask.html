@@ -1,0 +1,11 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+<h1>New question</h1>
+<form novalidate action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Ask!</button>
+</form>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load static %}
+<div class="question">
+ <div class="row">
+    <div class="col-2">
+       <div class="avatar">
+          <img src="{% get_media_prefix %}/{{ question.author.avatar }}" alt="" />
+       </div>
+       <div class="text text-center margin-top">
+          {{ question.author }}
+       </div>
+       <div class="rating vote-group">
+           <div id='question-rating-{{ question.id }}' class="text text-center">{{ question.rating }}</div>
+           <div class="text text-center">
+               <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                   <button data-type="question" data-id="{{ question.id }}" type="button" class="btn btn-outline-success btn-sm">+</button>
+                   <button data-type="question" data-id="{{ question.id }}" type="button" class="btn btn-outline-danger btn-sm">-</button>
+               </div>
+           </div>
+       </div>
+    </div>
+    <div class="col-10">
+       <a href="{% url 'question' question_id=question.id %}" class="text-decoration-none">
+          <h2 class="question-title">{{ question.title }}</h2>
+       </a>
+       <div class="question-text">
+          {{ question.text }}
+       </div>
+    </div>
+ </div>
+ <div class="row">
+    <div class="col-2"></div>
+    <div class="col-10">
+       <a href="{% url 'question' question_id=question.id %}">answers({{ question.answer_set.count }})</a>
+        {% include 'inc/enum_tags.html' %}
+    </div>
+ </div>
+</div>

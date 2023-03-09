@@ -1,0 +1,48 @@
+{% extends 'inc/base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+<div class="row">
+   <div class="col-2">
+      <div class="avatar-question">
+         <img class="text-center" src="{% get_media_prefix %}/{{ question.author.avatar }}" alt="" />
+      </div>
+      <div class="text text-center margin-top">
+         {{ question.author.username }}
+      </div>
+      <div class="rating vote-group-question text-center">
+         <div id='question-rating-{{ question.id }}' class="text">{{ question.rating }}</div>
+         <div class="text">
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+               <button data-type="question" data-id="{{ question.id }}" type="button" class="btn btn-outline-success btn-sm question-btn">+</button>
+               <button data-type="question" data-id="{{ question.id }}" type="button" class="btn btn-outline-danger btn-sm question-btn">-</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="col-10 fs-5">
+      <h1>{{ question.title }}</h1>
+      <div class="question-text">
+         {{ question.text }}
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-2"></div>
+      <div class="col-10">
+         <a href="/question/1">answers({{ question.answer_set.count }})</a>
+         {% include 'inc/enum_tags.html' %}
+      </div>
+   </div>
+   <h1>Answers</h1>
+   {% for answer in question.answers %}
+   {% include 'inc/answer_item.html' %}
+   {% endfor %}
+    {% include 'inc/paginator.html' %}
+   <h1>Add answer</h1>
+    <form novalidate action="{{ request.path }}" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Submit answer</button>
+    </form>
+</div>
+{% endblock %}

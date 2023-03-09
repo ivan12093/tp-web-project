@@ -1,0 +1,8 @@
+{% extends 'inc/question_list.html' %}
+{% block header %}
+<ul class="list-inline">
+      <li class="list-inline-item">
+         <a class="inline text-decoration-none fs-1 text-dark" href="{% url 'tag' name=tag.name %}">{{ tag.name }}</a>
+      </li>
+</ul>
+{% endblock %}
